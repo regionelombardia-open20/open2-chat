@@ -100,7 +100,11 @@ class Message extends Record
         $instance->is_deleted_by_sender = 0;
         $instance->is_deleted_by_receiver =  0;
         $instance->is_new = 1;
-        $instance->save();
+        if($instance->save()){
+            Message::automaticMessage($contactId);
+        }
+
+
         $result = '';
         if(count($instance->errors)){
             $result = json_encode($instance->errors);
@@ -110,6 +114,27 @@ class Message extends Record
         return $result;
     }
 
+    /**
+     * @param $contactId
+     */
+    public static function automaticMessage($contactId){
+       $module =  \Yii::$app->getModule('chat');
+       if($module){
+           $automaticMessages = $module->automaticMessage;
+           foreach ((array)$automaticMessages as $message){
+               $userId = $message['id'];
+               $text = $message['message'];
+               if($contactId == $userId) {
+                   $message = new Message();
+                   $message->text = $text;
+                   $message->sender_id = $contactId;
+                   $message->receiver_id = \Yii::$app->user->id;
+                   $message->is_new = 1;
+                   $message->save();
+               }
+           }
+       }
+    }
     /**
      * @inheritDoc
      */

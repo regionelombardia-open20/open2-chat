@@ -12,10 +12,10 @@
 namespace lispa\amos\chat\widgets\icons;
 
 use lispa\amos\chat\models\Message;
+use lispa\amos\chat\AmosChat;
 use lispa\amos\core\widget\WidgetIcon;
 use Yii;
 use yii\helpers\ArrayHelper;
-use lispa\amos\chat\AmosChat;
 
 /**
  * Class WidgetIconChat
@@ -23,16 +23,6 @@ use lispa\amos\chat\AmosChat;
  */
 class WidgetIconChat extends WidgetIcon
 {
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        $options = parent::getOptions();
-
-        //aggiunge all'oggetto container tutti i widgets recuperati dal controller del modulo
-        return ArrayHelper::merge($options, ["children" => []]);
-    }
 
     /**
      * @inheritdoc
@@ -45,24 +35,54 @@ class WidgetIconChat extends WidgetIcon
         $this->setDescription(AmosChat::t('amoschat', 'Visualizza i messaggi privati'));
 
         $this->setIcon('comments-o');
-        //$this->setIconFramework('');
-
         $this->setUrl(['/messages']);
         $this->setCode('CHAT');
         $this->setModuleName('chat');
         $this->setNamespace(__CLASS__);
-        $bulletCount = Message::find()->andWhere([
-            'is_new' => true,
-            'receiver_id' => Yii::$app->getUser()->getId(),
-            'is_deleted_by_receiver' => false
-        ])->count();
-        if ($bulletCount > 0) {
-            $this->setBulletCount($bulletCount);
-        }
 
-        $this->setClassSpan(ArrayHelper::merge($this->getClassSpan(), [
-            'bk-backgroundIcon',
-            'color-primary'
-        ]));
+        $this->setClassSpan(
+            ArrayHelper::merge(
+                $this->getClassSpan(),
+                [
+                    'bk-backgroundIcon',
+                    'color-primary'
+                ]
+            )
+        );
+
+        $this->setBulletCount(
+            $this->makeBulletCounter(Yii::$app->getUser()->getId())
+        );
     }
+
+    /**
+     * 
+     * @param type $user_id
+     * @return type
+     */
+    public function makeBulletCounter($user_id = null)
+    {
+        return Message::find()
+            ->andWhere([
+                'is_new' => true,
+                'receiver_id' => $user_id,
+                'is_deleted_by_receiver' => false
+            ])
+            ->asArray()
+            ->count();
+    }
+
+    /**
+     * Aggiunge all'oggetto container tutti i widgets recuperati dal controller del modulo
+     * 
+     * @return array
+     */
+    public function getOptions()
+    {
+        return ArrayHelper::merge(
+                parent::getOptions(),
+                ['children' => []]
+        );
+    }
+
 }

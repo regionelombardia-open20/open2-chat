@@ -12,6 +12,7 @@
 namespace lispa\amos\chat\widgets\graphics;
 
 use lispa\amos\chat\AmosChat;
+use lispa\amos\community\models\CommunityUserMm;
 use lispa\amos\core\module\BaseAmosModule;
 use lispa\amos\core\widget\WidgetGraphic;
 use yii\helpers\Url;
@@ -31,6 +32,7 @@ class WidgetGraphicChatAssistance extends WidgetGraphic
     public $welcome_message = '';
 
     public $assistanceWidgetId = '';
+    public $assistanceUserCommunityMan = false;
 
     /**
      * @inheritdoc
@@ -69,7 +71,21 @@ class WidgetGraphicChatAssistance extends WidgetGraphic
                                 if(!empty($conf['welcome_message'])) {
                                     $this->welcome_message = $conf['welcome_message'];
                                 }
-                                $this->assistanceUserId = $conf['assistanceUserId'];
+
+                                $userIdCM = null;
+                                if(!empty($conf['assistance_community_manager']) && $conf['assistance_community_manager'] == true) {
+                                    $userMm = CommunityUserMm::findOne(['community_id' => $id,  'role' => CommunityUserMm::ROLE_COMMUNITY_MANAGER]);
+                                    if($userMm){
+                                        $userIdCM = $userMm->user_id;
+                                    }
+                                }
+
+                                if(!empty($conf['assistanceUserId'])){
+                                    $this->assistanceUserId = $conf['assistanceUserId'];
+                                }
+                                if(!empty($userIdCM)){
+                                    $this->assistanceUserId = $userIdCM;
+                                }
 
                                 $isScope = true;
                                 break;
@@ -90,7 +106,7 @@ class WidgetGraphicChatAssistance extends WidgetGraphic
      */
     public function getHtml()
     {
-        if (!empty($this->assistanceUserId) && ($this->assistanceUserId != Yii::$app->user->id)) {
+        if ((!empty($this->assistanceUserId)) && ($this->assistanceUserId != Yii::$app->user->id)) {
             $url = Url::to(['/messages', 'contactId' => $this->assistanceUserId]);
             return $this->render('chat-assistance', [
                 'url' => $url,

@@ -116,6 +116,11 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
     public $assistenzaChatCommunity = [];
 
     /**
+     * @var array 
+     */
+    public $automaticMessage = [];
+
+    /**
      * Initializes amos messaggi privati module.
      * This method will initialize the [[db]] property to make sure it refers to a valid DB connection.
      * @throws InvalidConfigException if [[db]] is invalid.

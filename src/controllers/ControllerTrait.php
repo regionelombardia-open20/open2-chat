@@ -138,7 +138,10 @@ trait ControllerTrait
         $text = Yii::$app->request->post('text');
         /** @var $messageClass Message */
         $messageClass = $this->messageClass;
+
+
         return $messageClass::create($userId, $contactId, $text);
+
     }
 
     /**

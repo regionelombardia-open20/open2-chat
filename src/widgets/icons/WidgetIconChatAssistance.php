@@ -13,9 +13,11 @@ namespace lispa\amos\chat\widgets\icons;
 
 use lispa\amos\chat\models\Message;
 use lispa\amos\core\widget\WidgetIcon;
+use lispa\amos\core\widget\WidgetAbstract;
+use lispa\amos\core\icons\AmosIcons;
+use lispa\amos\chat\AmosChat;
 use Yii;
 use yii\helpers\ArrayHelper;
-use lispa\amos\chat\AmosChat;
 
 /**
  * Class WidgetIconChatAssistance
@@ -23,27 +25,6 @@ use lispa\amos\chat\AmosChat;
  */
 class WidgetIconChatAssistance extends WidgetIcon
 {
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        $options = parent::getOptions();
-
-        //aggiunge all'oggetto container tutti i widgets recuperati dal controller del modulo
-        return ArrayHelper::merge($options, ["children" => []]);
-    }
-
-
-    public function isVisible()
-    {
-        if ($return = \Yii::$app->getUser()->can($this->getWidgetPermission())) {
-            if(\Yii::$app->getModule('chat')->assistanceUserId != Yii::$app->user->id) {
-                return true;
-            }
-        }
-            return false;
-    }
 
     /**
      * @inheritdoc
@@ -52,29 +33,83 @@ class WidgetIconChatAssistance extends WidgetIcon
     {
         parent::init();
 
+        $paramsClassSpan = [
+            'bk-backgroundIcon',
+            'color-primary'
+        ];
+
         $this->setLabel(AmosChat::tHtml('amoschat', 'Assistenza'));
         $this->setDescription(AmosChat::t('amoschat', 'Hai bisogno di assistenza?'));
 
-        $this->setIcon('comments-o');
-        //$this->setIconFramework('');
+        if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
+            $this->setIconFramework(AmosIcons::IC);
+            $this->setIcon('assistenza');
+            $paramsClassSpan = [];
+        } else {
+            $this->setIcon('comments-o');
+        }
+
         $amosChat = AmosChat::getInstance();
 
-        $this->setUrl(['/messages', 'contactId' => $amosChat->assistanceUserId ]);
+        $this->setUrl(['/messages', 'contactId' => $amosChat->assistanceUserId]);
         $this->setCode('CHAT');
         $this->setModuleName('chat');
         $this->setNamespace(__CLASS__);
-        $bulletCount = Message::find()->andWhere([
-            'is_new' => true,
-            'receiver_id' => Yii::$app->getUser()->getId(),
-            'is_deleted_by_receiver' => false
-        ])->count();
-        if ($bulletCount > 0) {
-            $this->setBulletCount($bulletCount);
+
+        $this->setClassSpan(
+            ArrayHelper::merge(
+                $paramsClassSpan
+            )
+        );
+
+        $this->setBulletCount(
+            $this->makeBulletCounter(Yii::$app->getUser()->getId())
+        );
+    }
+
+    /**
+     * 
+     * @param type $user_id
+     * @return type
+     */
+    public function makeBulletCounter($user_id = null)
+    {
+        return Message::find()
+            ->andWhere([
+                'is_new' => true,
+                'receiver_id' => $user_id,
+                'is_deleted_by_receiver' => false
+            ])
+            ->asArray()
+            ->count();
+    }
+
+    /**
+     * Aggiunge all'oggetto container tutti i widgets recuperati dal controller del modulo
+     * 
+     * @return array
+     */
+    public function getOptions()
+    {
+        return ArrayHelper::merge(
+                parent::getOptions(),
+                ['children' => []]
+        );
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function isVisible()
+    {
+        if ($return = \Yii::$app->getUser()->can($this->getWidgetPermission())) {
+            if (\Yii::$app->getModule('chat')->assistanceUserId != Yii::$app->user->id) {
+                return true;
+            }
         }
 
-        $this->setClassSpan(ArrayHelper::merge($this->getClassSpan(), [
-            'bk-backgroundIcon',
-            'color-primary'
-        ]));
+        return false;
     }
+
 }

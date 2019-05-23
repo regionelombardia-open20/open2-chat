@@ -12,6 +12,7 @@
 namespace lispa\amos\chat\assets;
 
 use yii\web\AssetBundle;
+use lispa\amos\core\widget\WidgetAbstract;
 
 /**
  * Class AmosChatAsset
@@ -52,6 +53,11 @@ class AmosChatAsset extends AssetBundle
     public function init()
     {
         $moduleL = \Yii::$app->getModule('layout');
+
+        if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS){
+            $this->css = ['less/chat-assistance-fullsize.less'];
+        }
+
         if(!empty($moduleL)){
             $this->depends [] = 'lispa\amos\layout\assets\BaseAsset';
         }else{
