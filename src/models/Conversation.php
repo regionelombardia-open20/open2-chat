@@ -1,28 +1,28 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models;
+namespace open20\amos\chat\models;
 
-use lispa\amos\chat\AmosChat;
+use open20\amos\chat\AmosChat;
 use yii\db\ActiveQuery;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
 /**
  * Class Conversation
- * @package lispa\amos\chat\models
+ * @package open20\amos\chat\models
  *
  * @property-read User contact
  */
-class Conversation extends \lispa\amos\chat\models\base\Conversation
+class Conversation extends \open20\amos\chat\models\base\Conversation
 {
     /**
      * @inheritDoc
@@ -37,7 +37,7 @@ class Conversation extends \lispa\amos\chat\models\base\Conversation
      */
     public function getContact()
     {
-        return $this->hasOne(\lispa\amos\chat\models\User::className(), ['id' => 'contact_id']);
+        return $this->hasOne(\open20\amos\chat\models\User::className(), ['id' => 'contact_id']);
     }
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat\migrations
+ * @package    open20\amos\chat\migrations
  * @category   CategoryName
  */
 
-use lispa\amos\core\migration\AmosMigrationWidgets;
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\core\migration\AmosMigrationWidgets;
+use open20\amos\dashboard\models\AmosWidgets;
 
 /**
  * Class m180917_170759_add_widget_chat_assistance
@@ -25,7 +25,7 @@ class m180917_170759_add_widget_chat_assistance extends AmosMigrationWidgets
     {
         $this->widgets = [
             [
-                'classname' => \lispa\amos\chat\widgets\icons\WidgetIconChatAssistance::className(),
+                'classname' => \open20\amos\chat\widgets\icons\WidgetIconChatAssistance::className(),
                 'type' => AmosWidgets::TYPE_ICON,
                 'module' => 'chat',
                 'status' => AmosWidgets::STATUS_ENABLED,

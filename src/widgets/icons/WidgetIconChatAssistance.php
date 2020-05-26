@@ -1,27 +1,29 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\widgets\icons;
+namespace open20\amos\chat\widgets\icons;
 
-use lispa\amos\chat\models\Message;
-use lispa\amos\core\widget\WidgetIcon;
-use lispa\amos\core\widget\WidgetAbstract;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\chat\AmosChat;
+use open20\amos\core\widget\WidgetIcon;
+use open20\amos\core\widget\WidgetAbstract;
+use open20\amos\core\icons\AmosIcons;
+
+use open20\amos\chat\models\Message;
+use open20\amos\chat\AmosChat;
+
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
  * Class WidgetIconChatAssistance
- * @package lispa\amos\chat\widgets\icons
+ * @package open20\amos\chat\widgets\icons
  */
 class WidgetIconChatAssistance extends WidgetIcon
 {
@@ -41,7 +43,7 @@ class WidgetIconChatAssistance extends WidgetIcon
         $this->setLabel(AmosChat::tHtml('amoschat', 'Assistenza'));
         $this->setDescription(AmosChat::t('amoschat', 'Hai bisogno di assistenza?'));
 
-        if (!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
+        if (!empty(Yii::$app->params['dashboardEngine']) && Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
             $this->setIconFramework(AmosIcons::IC);
             $this->setIcon('assistenza');
             $paramsClassSpan = [];
@@ -56,32 +58,23 @@ class WidgetIconChatAssistance extends WidgetIcon
         $this->setModuleName('chat');
         $this->setNamespace(__CLASS__);
 
-        $this->setClassSpan(
-            ArrayHelper::merge(
-                $paramsClassSpan
-            )
-        );
+        $this->setClassSpan($paramsClassSpan);
 
-        $this->setBulletCount(
-            $this->makeBulletCounter(Yii::$app->getUser()->getId())
-        );
-    }
-
-    /**
-     * 
-     * @param type $user_id
-     * @return type
-     */
-    public function makeBulletCounter($user_id = null)
-    {
-        return Message::find()
-            ->andWhere([
-                'is_new' => true,
-                'receiver_id' => $user_id,
-                'is_deleted_by_receiver' => false
-            ])
-            ->asArray()
-            ->count();
+        if ($this->disableBulletCounters == false) {
+            $this->setBulletCount(
+                $this->makeBulletCounter(
+                    Yii::$app->getUser()->getId(),
+                    Message::className(),
+                    Message::find()
+                        ->select('id')
+                        ->andWhere([
+                            'is_new' => true,
+                            'receiver_id' => $user_id,
+                            'is_deleted_by_receiver' => false
+                        ])
+                )
+            );
+        }
     }
 
     /**

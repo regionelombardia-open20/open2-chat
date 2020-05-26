@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat;
+namespace open20\amos\chat;
 
 use yii\base\Arrayable;
 use yii\base\ArrayableTrait;
@@ -17,7 +17,7 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Class ModelDataProvider
- * @package lispa\amos\chat
+ * @package open20\amos\chat
  */
 class ModelDataProvider extends ActiveDataProvider implements Arrayable
 {

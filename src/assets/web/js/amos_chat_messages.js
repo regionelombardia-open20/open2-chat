@@ -1,5 +1,5 @@
 /**
- * This is the JavaScript widget used by the lispa\amos\chat\MessageWidget widget.
+ * This is the JavaScript widget used by the open20\amos\chat\MessageWidget widget.
  */
 (function ($) {
     $.fn.amosChatMessages = function (method) {

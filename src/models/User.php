@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models;
+namespace open20\amos\chat\models;
 
 /**
  * Class User
- * @package lispa\amos\chat\models
+ * @package open20\amos\chat\models
  */
-class User extends \lispa\amos\chat\models\base\User
+class User extends \open20\amos\chat\models\base\User
 {
 
 }

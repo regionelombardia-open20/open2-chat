@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models\base;
+namespace open20\amos\chat\models\base;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\DataProvider;
-use lispa\amos\chat\models\search\MessageQuery;
-use lispa\amos\core\record\Record;
-use lispa\amos\core\utilities\Email;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\DataProvider;
+use open20\amos\chat\models\search\MessageQuery;
+use open20\amos\core\record\Record;
+use open20\amos\core\utilities\Email;
 use Yii;
 use yii\db\Expression;
 
 /**
  * Class Message
- * @package lispa\amos\chat\models\base
+ * @package open20\amos\chat\models\base
  *
  * @property string id
  * @property int sender_id
@@ -37,6 +37,7 @@ use yii\db\Expression;
 class Message extends Record
 {
     /**
+     * @see    \yii\db\ActiveRecord::tableName()    for more info.
      */
     public static function tableName()
     {

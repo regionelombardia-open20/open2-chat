@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
@@ -18,7 +18,7 @@
  * @var int $newMessagesCount
  */
 
-use lispa\amos\chat\AmosChat;
+use open20\amos\chat\AmosChat;
 
 ?>
 <?php if (isset($viewNewMessagesRow) && $viewNewMessagesRow): ?>
@@ -34,12 +34,12 @@ use lispa\amos\chat\AmosChat;
     <?php if(\Yii::$app->getModule('chat')->enableForwardMessage && !empty(\Yii::$app->getModule('chat')->userIdForwardMessage) && $msgOwnerClass == 'others' && Yii::$app->user->can('ADMIN')) {?>
         <div class="forward-message">
             <a href="" data-pjax="0" class="forward-button btn btn-navigation-primary">Forward message to >></a>
-<!--            <a href="" data-pjax="0" class="forward-button"><span>--><?php //echo \lispa\amos\core\icons\AmosIcons::show('mail-reply-all', [
+<!--            <a href="" data-pjax="0" class="forward-button"><span>--><?php //echo \open20\amos\core\icons\AmosIcons::show('mail-reply-all', [
 //                        'class' => 'am-2 flipped'
 //                    ]); ?><!--</span> </a>-->
             <?php $arrIdUser = \Yii::$app->getModule('chat')->userIdForwardMessage?>
             <?= \yii\helpers\Html::dropDownList('message-to-forward-'.$model['messageId'], null,
-                \yii\helpers\ArrayHelper::map(\lispa\amos\chat\models\base\User::find()->andWhere(['id' => $arrIdUser])->all(), 'id', 'username'),
+                \yii\helpers\ArrayHelper::map(\open20\amos\chat\models\base\User::find()->andWhere(['id' => $arrIdUser])->all(), 'id', 'username'),
                 [
                         'class' => 'form-control select',
                         'prompt' => 'Select...',

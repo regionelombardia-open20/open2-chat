@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-use lispa\amos\core\migration\AmosMigration;
+use open20\amos\core\migration\AmosMigration;
 
 /**
  * Class m160930_143930_create_amoschat_message_table
@@ -22,6 +22,7 @@ class m160930_143930_create_amoschat_message_table extends AmosMigration
 
     /**
      * Use this instead of function up().
+     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -60,6 +61,7 @@ class m160930_143930_create_amoschat_message_table extends AmosMigration
 
     /**
      * Use this instead of function down().
+     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {

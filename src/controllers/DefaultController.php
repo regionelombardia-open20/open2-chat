@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\controllers;
+namespace open20\amos\chat\controllers;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\assets\AmosChatAsset;
-use lispa\amos\chat\models\Conversation;
-use lispa\amos\chat\models\Message;
-use lispa\amos\chat\models\User;
-use lispa\amos\core\controllers\CrudController;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\assets\AmosChatAsset;
+use open20\amos\chat\models\Conversation;
+use open20\amos\chat\models\Message;
+use open20\amos\chat\models\User;
+use open20\amos\core\controllers\CrudController;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
 use pendalf89\filemanager\models\Mediafile;
 use Yii;
 use yii\db\Expression;
@@ -31,7 +31,7 @@ use yii\web\Response;
 
 /**
  * Class DefaultController
- * @package lispa\amos\chat\controllers
+ * @package open20\amos\chat\controllers
  *
  * @property-read User user
  */
@@ -61,11 +61,12 @@ class DefaultController extends CrudController
     /**
      * Init all view types
      *
+     * @see    \yii\base\Object::init()    for more info.
      */
     public function init()
     {
         $this->setModelObj(new Conversation());
-        $this->setModelSearch(new \lispa\amos\chat\models\base\Conversation());
+        $this->setModelSearch(new \open20\amos\chat\models\base\Conversation());
 
         AmosChatAsset::register(Yii::$app->view);
 
@@ -122,6 +123,7 @@ class DefaultController extends CrudController
     }
 
     /**
+     * @see \yii\base\Controller::actions()    for more info.
      */
     public function actions()
     {
@@ -407,7 +409,7 @@ class DefaultController extends CrudController
 
         if (empty($module)) {
             if (strpos($this->layout, '@') === false) {
-                $this->layout = '@vendor/lispa/amos-core/views/layouts/' . (!empty($layout) ? $layout : $this->layout);
+                $this->layout = '@vendor/open20/amos-core/views/layouts/' . (!empty($layout) ? $layout : $this->layout);
             }
             return true;
         }

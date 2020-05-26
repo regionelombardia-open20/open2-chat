@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\widgets\graphics;
+namespace open20\amos\chat\widgets\graphics;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\community\models\CommunityUserMm;
-use lispa\amos\core\module\BaseAmosModule;
-use lispa\amos\core\widget\WidgetGraphic;
+use open20\amos\chat\AmosChat;
+use open20\amos\community\models\CommunityUserMm;
+use open20\amos\core\module\BaseAmosModule;
+use open20\amos\core\widget\WidgetGraphic;
 use yii\helpers\Url;
 use Yii;
 
 /**
  * Class WidgetGraphicChatAssistance
- * @package lispa\amos\chat\widgets\graphics
+ * @package open20\amos\chat\widgets\graphics
  */
 class WidgetGraphicChatAssistance extends WidgetGraphic
 {

@@ -1,19 +1,19 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\core\helpers\Html;
+use open20\amos\chat\AmosChat;
+use open20\amos\core\helpers\Html;
 
 /**
- * @var \lispa\amos\admin\models\UserProfile $contactProfile
- * @var \lispa\amos\chat\models\Message $message
+ * @var \open20\amos\admin\models\UserProfile $contactProfile
+ * @var \open20\amos\chat\models\Message $message
  */
 
 $module = Yii::$app->getModule('chat');
@@ -44,7 +44,7 @@ $module = Yii::$app->getModule('chat');
         <div style="margin-top:20px; display: flex; padding: 10px;">
             <div
                 style="width: 50px; height: 50px; overflow: hidden;-webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%;float: left;">
-                <?php /*echo \lispa\amos\admin\widgets\UserCardWidget::widget([
+                <?php /*echo \open20\amos\admin\widgets\UserCardWidget::widget([
                     'model' => $contactProfile,
                     'onlyAvatar' => true,
                     'absoluteUrl' => true

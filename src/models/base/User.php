@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models\base;
+namespace open20\amos\chat\models\base;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\core\helpers\Html;
+use open20\amos\chat\AmosChat;
+use open20\amos\core\helpers\Html;
 use Yii;
 use yii\base\NotSupportedException;
-use lispa\amos\admin\AmosAdmin;
+use open20\amos\admin\AmosAdmin;
 
 /**
  * Class User
- * @package lispa\amos\chat\models\base
+ * @package open20\amos\chat\models\base
  *
- * @property \lispa\amos\admin\models\UserProfile $profile
+ * @property \open20\amos\admin\models\UserProfile $profile
  */
-class User extends \lispa\amos\core\user\User
+class User extends \open20\amos\core\user\User
 {
     private $_name;
 

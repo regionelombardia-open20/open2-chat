@@ -1,6 +1,15 @@
 <?php
-use lispa\amos\core\migration\AmosMigrationWidgets;
-use lispa\amos\dashboard\models\AmosWidgets;
+
+/**
+ * Aria S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    Open20Package
+ * @category   CategoryName
+ */
+use open20\amos\core\migration\AmosMigrationWidgets;
+use open20\amos\dashboard\models\AmosWidgets;
 
 
 /**
@@ -16,7 +25,7 @@ class m181022_143527_add_widget_chat_assistance extends AmosMigrationWidgets
     {
         $this->widgets = [
             [
-                'classname' => \lispa\amos\chat\widgets\graphics\WidgetGraphicChatAssistance::className(),
+                'classname' => \open20\amos\chat\widgets\graphics\WidgetGraphicChatAssistance::className(),
                 'type' => AmosWidgets::TYPE_GRAPHIC,
                 'module' => self::MODULE_NAME,
                 'status' => AmosWidgets::STATUS_ENABLED,

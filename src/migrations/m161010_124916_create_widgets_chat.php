@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
 use yii\db\Migration;
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\dashboard\models\AmosWidgets;
 
 /**
  * Class m161010_124916_create_widgets_chat
@@ -24,7 +24,7 @@ class m161010_124916_create_widgets_chat extends Migration
     {
         $this->widgets = [
             [
-                'classname' => \lispa\amos\chat\widgets\icons\WidgetIconChat::className(),
+                'classname' => \open20\amos\chat\widgets\icons\WidgetIconChat::className(),
                 'type' => AmosWidgets::TYPE_ICON,
                 'module' => self::MODULE_NAME,
                 'status' => AmosWidgets::STATUS_ENABLED

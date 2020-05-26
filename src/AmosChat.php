@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat;
+namespace open20\amos\chat;
 
-use lispa\amos\core\module\AmosModule;
-use lispa\amos\core\module\ModuleInterface;
+use open20\amos\core\module\AmosModule;
+use open20\amos\core\module\ModuleInterface;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidConfigException;
@@ -22,7 +22,7 @@ use yii\web\Application as Web;
 
 /**
  * Class AmosChat
- * @package lispa\amos\chat RUdy
+ * @package open20\amos\chat RUdy
  */
 class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
 {
@@ -51,12 +51,12 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
     /**
      * @var string $controllerNamespace Default controller namespace
      */
-    public $controllerNamespace = 'lispa\amos\chat\controllers';
+    public $controllerNamespace = 'open20\amos\chat\controllers';
 
     /**
      * @var string $controllerConsoleNamespace Console namespace
      */
-    public $controllerConsoleNamespace = 'lispa\amos\chat\console';
+    public $controllerConsoleNamespace = 'open20\amos\chat\console';
 
     /**
      * @var array $formRedactorButtons List of all Redactor visible buttons in message form
@@ -132,7 +132,7 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
         if ($this->subjectOfimmediateNotification == 'default') {
             $this->subjectOfimmediateNotification = self::t('amoschat', 'New message from chat');
         }
-        \Yii::setAlias('@lispa/amos/' . static::getModuleName() . '/controllers', __DIR__ . '/controllers/');
+        \Yii::setAlias('@open20/amos/' . static::getModuleName() . '/controllers', __DIR__ . '/controllers/');
         // initialize the module with the configuration loaded from config.php
         Yii::configure($this, require(__DIR__ . DIRECTORY_SEPARATOR . self::$CONFIG_FOLDER . DIRECTORY_SEPARATOR . 'config.php'));
     }

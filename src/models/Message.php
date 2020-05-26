@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models;
+namespace open20\amos\chat\models;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\controllers\DefaultController;
-use lispa\amos\emailmanager\AmosEmail;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\controllers\DefaultController;
+use open20\amos\emailmanager\AmosEmail;
 use Yii;
 use yii\log\Logger;
 
 /**
  * Class Message
- * @package lispa\amos\chat\models
+ * @package open20\amos\chat\models
  */
-class Message extends \lispa\amos\chat\models\base\Message
+class Message extends \open20\amos\chat\models\base\Message
 {
     public $userIdForward = [];
     /**
@@ -87,7 +87,7 @@ class Message extends \lispa\amos\chat\models\base\Message
 
                 /** @var DefaultController $controller */
                 $controller = new DefaultController('default', $module);
-                $text = $controller->renderMailPartial('@vendor/lispa/amos-chat/src/views/default/email', [
+                $text = $controller->renderMailPartial('@vendor/open20/amos-chat/src/views/default/email', [
                     'message' => $this,
                     'contactProfile' => $senderProfile
                 ], $this->receiver_id);
@@ -95,7 +95,7 @@ class Message extends \lispa\amos\chat\models\base\Message
                 $mailModule = Yii::$app->getModule('email');
                 if (!is_null($mailModule)) {
 
-                    /** @var \lispa\amos\emailmanager\AmosEmail $mailModule */
+                    /** @var \open20\amos\emailmanager\AmosEmail $mailModule */
                     $mailModule->send(
                         (!empty($module->defaultEmailSender)? $module->defaultEmailSender : (!empty($from) ? $from : $sender->email)),
                         User::findOne($this->receiver_id)->email,

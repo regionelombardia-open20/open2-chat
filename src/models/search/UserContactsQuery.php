@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models\search;
+namespace open20\amos\chat\models\search;
 
-use lispa\amos\chat\ModelDataProvider;
-use lispa\amos\chat\models\User;
+use open20\amos\chat\ModelDataProvider;
+use open20\amos\chat\models\User;
 use yii\db\ActiveQuery;
-use lispa\amos\admin\models\UserContact;
+use open20\amos\admin\models\UserContact;
 
 /**
  * Class UserContactsQuery
- * @package lispa\amos\chat\models\search
+ * @package open20\amos\chat\models\search
  */
 class UserContactsQuery extends User
 {
@@ -46,7 +46,7 @@ class UserContactsQuery extends User
         if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
             $scope = $moduleCwh->getCwhScope();
             if (isset($scope['community'])) {
-                $community = \lispa\amos\community\models\Community::findOne($scope['community']);
+                $community = \open20\amos\community\models\Community::findOne($scope['community']);
                 $queryUsersMm = $community->getCommunityUserMms();
                 $queryUsersMm->andWhere("user_profile.user_id != :userId", ['userId' => $userId]);
                 $rs = $queryUsersMm->all();

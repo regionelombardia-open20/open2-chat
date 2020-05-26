@@ -1,5 +1,14 @@
 <?php
-use lispa\amos\core\migration\AmosMigrationPermissions;
+
+/**
+ * Aria S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    Open20Package
+ * @category   CategoryName
+ */
+use open20\amos\core\migration\AmosMigrationPermissions;
 use yii\rbac\Permission;
 
 
@@ -17,7 +26,7 @@ class m181022_144427_permission_widget_download_chat_assistance extends AmosMigr
 
         return [
             [
-                'name' => \lispa\amos\chat\widgets\graphics\WidgetGraphicChatAssistance::className(),
+                'name' => \open20\amos\chat\widgets\graphics\WidgetGraphicChatAssistance::className(),
                 'type' => Permission::TYPE_PERMISSION,
                 'description' => $prefixStr . 'Permission widget graphinc assistance chat',
                 'ruleName' => null,

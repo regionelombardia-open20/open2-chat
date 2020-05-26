@@ -1,7 +1,16 @@
 <?php
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\core\helpers\Html;
+/**
+ * Aria S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    Open20Package
+ * @category   CategoryName
+ */
+
+use open20\amos\chat\AmosChat;
+use open20\amos\core\helpers\Html;
 use yii\redactor\widgets\Redactor;
 
 ?>

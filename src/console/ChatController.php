@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\console;
+namespace open20\amos\chat\console;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\models\Message;
-use lispa\amos\chat\models\User;
-use lispa\amos\admin\models\UserProfile;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\models\Message;
+use open20\amos\chat\models\User;
+use open20\amos\admin\models\UserProfile;
 use Yii;
 
 /**
  * Class ChatController
- * @package lispa\amos\chat\console
+ * @package open20\amos\chat\console
  */
 class ChatController extends \yii\console\Controller
 {
@@ -47,8 +47,8 @@ class ChatController extends \yii\console\Controller
             Yii::$app->getMailer()
                 ->compose(
                     [
-                        'html' => '@vendor/lispa/amos-chat/src/mail/new-message/html',
-                        'text' => '@vendor/lispa/amos-chat/src/mail/new-message/text'
+                        'html' => '@vendor/open20/amos-chat/src/mail/new-message/html',
+                        'text' => '@vendor/open20/amos-chat/src/mail/new-message/text'
                     ], [
                     'userData' => $userData,
                     'subject' => $subject,

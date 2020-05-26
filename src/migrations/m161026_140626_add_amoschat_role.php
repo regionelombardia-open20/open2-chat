@@ -1,21 +1,22 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-use lispa\amos\core\migration\AmosMigration;
+use open20\amos\core\migration\AmosMigration;
 use yii\rbac\Permission;
 
 class m161026_140626_add_amoschat_role extends AmosMigration
 {
     /**
      * Use this instead of function up().
+     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -25,6 +26,7 @@ class m161026_140626_add_amoschat_role extends AmosMigration
 
     /**
      * Use this instead of function down().
+     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {
@@ -46,7 +48,7 @@ class m161026_140626_add_amoschat_role extends AmosMigration
                 'ruleName' => null
             ],
             [
-                'name' => \lispa\amos\chat\widgets\icons\WidgetIconChat::className(),
+                'name' => \open20\amos\chat\widgets\icons\WidgetIconChat::className(),
                 'type' => Permission::TYPE_PERMISSION,
                 'description' => 'Permesso per vedere il widget di accesso ai messaggi',
                 'ruleName' => null,

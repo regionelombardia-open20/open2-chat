@@ -1,16 +1,25 @@
 <?php
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\widgets\ConversationWidget;
-use lispa\amos\chat\widgets\MessageWidget;
-use lispa\amos\chat\widgets\UserContactsWidget;
-use lispa\amos\core\icons\AmosIcons;
+/**
+ * Aria S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    Open20Package
+ * @category   CategoryName
+ */
+
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\widgets\ConversationWidget;
+use open20\amos\chat\widgets\MessageWidget;
+use open20\amos\chat\widgets\UserContactsWidget;
+use open20\amos\core\icons\AmosIcons;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\ListView;
 
-//use lispa\amos\core\forms\ActiveForm;
+//use open20\amos\core\forms\ActiveForm;
 
 /**
  * @var \yii\web\View $this
@@ -30,10 +39,10 @@ $moduleChat = \Yii::$app->getModule(AmosChat::getModuleName());
 $showVideoConference  = !empty(\Yii::$app->getModule('videoconference')) && $moduleChat->enableVideoconference;
 
 if($showVideoConference) {
-    $loggedUserProfileId = \lispa\amos\admin\models\UserProfile::find()->andWhere(['user_id' => \Yii::$app->user->id])->one()->id;
+    $loggedUserProfileId = \open20\amos\admin\models\UserProfile::find()->andWhere(['user_id' => \Yii::$app->user->id])->one()->id;
     $receiverUserProfileId = null;
     if(!is_null($contact)){
-        $receiverUserProfile = \lispa\amos\admin\models\UserProfile::find()->andWhere(['user_id' => $contact->id])->one();
+        $receiverUserProfile = \open20\amos\admin\models\UserProfile::find()->andWhere(['user_id' => $contact->id])->one();
         if(!is_null($receiverUserProfile)){
              $receiverUserProfileId = $receiverUserProfile->id;
         }

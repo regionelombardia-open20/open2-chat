@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models\search;
+namespace open20\amos\chat\models\search;
 
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 
 /**
  * Class ConversationQuery
- * @package lispa\amos\chat\models\search
+ * @package open20\amos\chat\models\search
  */
 class ConversationQuery extends ActiveQuery
 {

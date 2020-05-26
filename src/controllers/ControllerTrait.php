@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\controllers;
+namespace open20\amos\chat\controllers;
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\DataProvider;
-use lispa\amos\chat\models\Conversation;
-use lispa\amos\chat\models\Message;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\DataProvider;
+use open20\amos\chat\models\Conversation;
+use open20\amos\chat\models\Message;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\filters\AccessRule;
@@ -26,7 +26,7 @@ use yii\web\IdentityInterface;
 
 /**
  * Class ControllerTrait
- * @package lispa\amos\chat\controllers
+ * @package open20\amos\chat\controllers
  *
  * @property-read IdentityInterface user
  * @property-read string messageClass
@@ -183,7 +183,7 @@ trait ControllerTrait
         $userId = $this->user->getId();
         /** @var $conversationClass Conversation */
         $conversationClass = $this->conversationClass;
-        return $conversationClass::remove($userId, $contactId);
+        return json_encode($conversationClass::remove($userId, $contactId));
     }
 
     /**

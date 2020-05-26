@@ -1,21 +1,21 @@
 {
-    "name": "lispa/amos-chat",
+    "name": "open20/amos-chat",
     "description": "Sistema AMOS per la chat",
     "keywords": ["amos", "yii2", "chat"],
-    "homepage": "http://git.lispa.it/lispa/amos-chat",
+    "homepage": "http://git.open20.it/open20/amos-chat",
     "type": "component",
-    "proscription": "BSD-3-Clause",
+    "license": "BSD-3-Clause",
     "support": {
-        "issues": "http://git.lispa.it/lispa/amos-chat/issues",
+        "issues": "http://git.open20.it/open20/amos-chat/issues",
         "forum": "http://www.example.com/forum/",
-        "wiki": "http://git.lispa.it/lispa/amos-chat/wikis/home",
-        "source": "http://git.lispa.it/lispa/amos-chat/tree/master"
+        "wiki": "http://git.open20.it/open20/amos-chat/wikis/home",
+        "source": "http://git.open20.it/open20/amos-chat/tree/master"
     },
     "require": {
         "php": ">=5.4.0",
-        "lispa/amos-core" : "*",
-        "lispa/amos-admin" : "*",
-        "lispa/amos-email-manager" : "*",
+        "open20/amos-admin": "^2.0.0",
+        "open20/amos-core":"^1.9.60",
+        "open20/amos-email-manager": "^1.1.0",
         "kop/yii2-scroll-pager": "~2.2"
     },
     "config": {
@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "lispa\\amos\\chat\\": "src"
+            "open20\\amos\\chat\\": "src"
         }
     },
     "require-dev": {

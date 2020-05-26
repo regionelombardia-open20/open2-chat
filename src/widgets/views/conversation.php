@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-use lispa\amos\chat\AmosChat;
-use lispa\amos\chat\models\User;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\core\helpers\Html;
+use open20\amos\chat\AmosChat;
+use open20\amos\chat\models\User;
+use open20\amos\core\icons\AmosIcons;
+use open20\amos\core\helpers\Html;
 
 /**
  * @var array $model
  * @var int $key
  * @var array $settings
  * @var boolean $isCurrent
- * @var \lispa\amos\chat\controllers\DefaultController $appController
+ * @var \open20\amos\chat\controllers\DefaultController $appController
  */
 
 $appController = Yii::$app->controller;

@@ -1,33 +1,33 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\models\base;
+namespace open20\amos\chat\models\base;
 
-use lispa\amos\chat\DataProvider;
-use lispa\amos\chat\models\search\ConversationQuery;
-use lispa\amos\core\record\Record;
+use open20\amos\chat\DataProvider;
+use open20\amos\chat\models\search\ConversationQuery;
+use open20\amos\core\record\Record;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
  * Class Conversation
- * @package lispa\amos\chat\models\base
+ * @package open20\amos\chat\models\base
  *
  * @property int $user_id
  * @property int contact_id
  * @property int last_message_id
  *
- * @property-read \lispa\amos\chat\models\Message $lastMessage
- * @property-read \lispa\amos\chat\models\Message[] $newMessages
+ * @property-read \open20\amos\chat\models\Message $lastMessage
+ * @property-read \open20\amos\chat\models\Message[] $newMessages
  */
 class Conversation extends Record
 {
@@ -127,8 +127,8 @@ class Conversation extends Record
      */
     public static function unread($userId, $contactId)
     {
-        /** @var \lispa\amos\chat\models\Message $message */
-        $message = \lispa\amos\chat\models\Message::find()
+        /** @var \open20\amos\chat\models\Message $message */
+        $message = \open20\amos\chat\models\Message::find()
             ->where(['sender_id' => $contactId, 'receiver_id' => $userId, 'is_deleted_by_receiver' => false])
             ->orderBy(['id' => SORT_DESC])
             ->limit(1)
@@ -146,7 +146,7 @@ class Conversation extends Record
      */
     public static function tableName()
     {
-        return \lispa\amos\chat\models\Message::tableName();
+        return \open20\amos\chat\models\Message::tableName();
     }
 
     /**
@@ -167,7 +167,7 @@ class Conversation extends Record
      */
     public function getLastMessage()
     {
-        return $this->hasOne(\lispa\amos\chat\models\Message::className(), ['id' => 'last_message_id']);
+        return $this->hasOne(\open20\amos\chat\models\Message::className(), ['id' => 'last_message_id']);
     }
 
     /**
@@ -175,7 +175,7 @@ class Conversation extends Record
      */
     public function getNewMessages()
     {
-        return $this->hasMany(\lispa\amos\chat\models\Message::className(), ['sender_id' => 'contact_id', 'receiver_id' => 'user_id'])
+        return $this->hasMany(\open20\amos\chat\models\Message::className(), ['sender_id' => 'contact_id', 'receiver_id' => 'user_id'])
             ->andOnCondition(['is_new' => true]);
     }
 

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-use lispa\amos\core\helpers\Html;
-use lispa\amos\chat\assets\AmosChatAsset;
+use open20\amos\core\helpers\Html;
+use open20\amos\chat\assets\AmosChatAsset;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 

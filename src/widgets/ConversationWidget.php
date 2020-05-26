@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\chat
+ * @package    open20\amos\chat
  * @category   CategoryName
  */
 
-namespace lispa\amos\chat\widgets;
+namespace open20\amos\chat\widgets;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -18,14 +18,14 @@ use yii\widgets\ListView;
 
 /**
  * Class ConversationWidget
- * @package lispa\amos\chat\widgets
+ * @package open20\amos\chat\widgets
  */
 class ConversationWidget extends ListView
 {
     /**
      * @var string
      */
-    public static $CONVERSATION_TEMPLATE = '@vendor/lispa/amos-chat/src/widgets/views/conversation.php';
+    public static $CONVERSATION_TEMPLATE = '@vendor/open20/amos-chat/src/widgets/views/conversation.php';
 
     /**
      * The current user
