@@ -83,12 +83,12 @@
             var $chat = $(this);
             var widget = $chat.data('amosChatMessages');
             var $form = $chat.find(widget.settings.form);
-            $form.find('input, textarea, select, iframe').each(function () {
+            $form.find('input, textarea, select').each(function () {
                 var $input = $(this);
                 $input.val('');
             });
-            //console.log("Reset");
-            tinyMCE.activeEditor.setContent("");
+            $('.redactor-editor').find('p').empty();
+            $('.redactor-editor').html('');
         },
 
         send: function () {
@@ -96,7 +96,7 @@
             var widget = $chat.data('amosChatMessages');
             var $form = $chat.find(widget.settings.form);
             var url = $form.attr('action');
-               
+
             $.ajax({
                 url: url,
                 type: $form.attr('method'),

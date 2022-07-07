@@ -2,15 +2,15 @@
 
 use open20\amos\chat\AmosChat;
 use open20\amos\core\helpers\Html;
-use open20\amos\core\forms\TextEditorWidget;
+use yii\redactor\widgets\Redactor;
+
 ?>
 <?= Html::beginForm('', 'post', [
     'id' => 'msg-form',
     'class' => 'col-xs-11 nop'
 ]); ?>
 <label class="hidden" for="chat-message"><?= AmosChat::tHtml('amoschat', 'Messaggio') ?></label>
-
-<?= TextEditorWidget::widget([
+<?= Redactor::widget([
     'name' => 'text',
     'options' => [
         'id' => 'chat-message',
@@ -20,17 +20,7 @@ use open20\amos\core\forms\TextEditorWidget;
     'clientOptions' => [
         'focus' => true,
         'buttons' => Yii::$app->controller->module->formRedactorButtons,
-        'lang' => substr(Yii::$app->language, 0, 2),
-        'toolbar' => "link image",
-        'plugins' => ['autosave'],
-        'setup' => new yii\web\JsExpression('function(editor) {
-                editor.on("change keyup", function(e){
-                    //console.log("Saving");
-                    //tinyMCE.triggerSave(); // updates all instances
-                    editor.save();
-                    $(editor.getElement()).trigger("change"); 
-                });
-            }')
+        'lang' => substr(Yii::$app->language, 0, 2)
     ]
 ]) ?>
 <?= Html::endForm(); ?>

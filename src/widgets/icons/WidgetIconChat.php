@@ -53,19 +53,13 @@ class WidgetIconChat extends WidgetIcon
         );
         
         if ($this->disableBulletCounters == false) {
-            $this->setBulletCount(
-                $this->makeBulletCounter(
-                    Yii::$app->getUser()->getId(),
-                    Message::className(),
-                    Message::find()
-                    ->select('id')
-                    ->andWhere([
-                        'is_new' => true,
-                        'receiver_id' => Yii::$app->getUser()->getId(),
-                        'is_deleted_by_receiver' => false
-                    ])
-                )
-            );
+            $counter = Message::find()->andWhere([
+                'is_new' => true,
+                'receiver_id' => Yii::$app->getUser()->getId(),
+                'is_deleted_by_receiver' => false
+            ])->count();
+            
+            $this->setBulletCount($counter);
         }
     }
 

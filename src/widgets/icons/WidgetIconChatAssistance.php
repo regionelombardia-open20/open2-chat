@@ -61,19 +61,15 @@ class WidgetIconChatAssistance extends WidgetIcon
         $this->setClassSpan($paramsClassSpan);
 
         if ($this->disableBulletCounters == false) {
-            $this->setBulletCount(
-                $this->makeBulletCounter(
-                    Yii::$app->getUser()->getId(),
-                    Message::className(),
-                    Message::find()
-                        ->select('id')
-                        ->andWhere([
-                            'is_new' => true,
-                            'receiver_id' => $user_id,
-                            'is_deleted_by_receiver' => false
-                        ])
-                )
-            );
+            $counter = Message::find()
+            ->andWhere([
+                'is_new' => true,
+                'receiver_id' => $user_id,
+                'is_deleted_by_receiver' => false
+            ])
+            ->count();
+            
+            $this->setBulletCount($counter);
         }
     }
 
