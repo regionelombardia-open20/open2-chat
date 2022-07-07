@@ -37,7 +37,6 @@ use yii\db\Expression;
 class Message extends Record
 {
     /**
-     * @see    \yii\db\ActiveRecord::tableName()    for more info.
      */
     public static function tableName()
     {

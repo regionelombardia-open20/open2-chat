@@ -16,7 +16,6 @@ class m161026_140626_add_amoschat_role extends AmosMigration
 {
     /**
      * Use this instead of function up().
-     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -26,7 +25,6 @@ class m161026_140626_add_amoschat_role extends AmosMigration
 
     /**
      * Use this instead of function down().
-     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {

@@ -61,7 +61,6 @@ class DefaultController extends CrudController
     /**
      * Init all view types
      *
-     * @see    \yii\base\Object::init()    for more info.
      */
     public function init()
     {
@@ -123,7 +122,6 @@ class DefaultController extends CrudController
     }
 
     /**
-     * @see \yii\base\Controller::actions()    for more info.
      */
     public function actions()
     {
