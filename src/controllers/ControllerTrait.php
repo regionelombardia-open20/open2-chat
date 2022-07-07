@@ -183,7 +183,7 @@ trait ControllerTrait
         $userId = $this->user->getId();
         /** @var $conversationClass Conversation */
         $conversationClass = $this->conversationClass;
-        return $conversationClass::remove($userId, $contactId);
+        return json_encode($conversationClass::remove($userId, $contactId));
     }
 
     /**
