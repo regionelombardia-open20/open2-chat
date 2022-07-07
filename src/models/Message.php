@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Aria S.p.A.
  * OPEN 2.0
@@ -24,6 +23,7 @@ use yii\log\Logger;
 class Message extends \open20\amos\chat\models\base\Message
 {
     public $userIdForward = [];
+
     /**
      * @inheritDoc
      */
@@ -49,7 +49,7 @@ class Message extends \open20\amos\chat\models\base\Message
     public static function formatDate($value)
     {
         $today = date_create()->setTime(0, 0, 0);
-        $date = date_create($value)->setTime(0, 0, 0);
+        $date  = date_create($value)->setTime(0, 0, 0);
         if ($today == $date) {
             $label = AmosChat::tHtml('amoschat', 'Oggi');
         } elseif ($today->getTimestamp() - $date->getTimestamp() == 24 * 60 * 60) {
@@ -81,26 +81,47 @@ class Message extends \open20\amos\chat\models\base\Message
                     //use default platform email assistance
                     $from = Yii::$app->params['email-assistenza'];
                 }
-                $sender = User::findOne($this->sender_id);
+                $sender        = User::findOne($this->sender_id);
                 $senderProfile = $sender->profile;
-                $subject = AmosChat::t('amoschat', 'You received a new private message');
+                $subject       = AmosChat::t('amoschat', 'You received a new private message');
 
                 /** @var DefaultController $controller */
                 $controller = new DefaultController('default', $module);
-                $text = $controller->renderMailPartial('@vendor/open20/amos-chat/src/views/default/email', [
+                $text       = $controller->renderMailPartial('@vendor/open20/amos-chat/src/views/default/email',
+                    [
                     'message' => $this,
                     'contactProfile' => $senderProfile
-                ], $this->receiver_id);
+                    ], $this->receiver_id);
 
+//                if (!(isset(\Yii::$app->params['disableBulletCounters']) && (\Yii::$app->params['disableBulletCounters']
+//                    === true))) {
+//                    $bc  = new \open20\amos\utility\models\BulletCounters;
+//                    $wid = BulletCounters::getAmosWidgetsIconNameID('chat',
+//                            \open20\amos\chat\widgets\icons\WidgetIconChat::className());
+//                    if (!empty($wid)) {
+//                        $rs = \open20\amos\utility\models\BulletCounters::find()
+//                            ->andWhere([
+//                                'widget_icon_id' => $wid['id'],
+//                                'user_id' => $this->receiver_id
+//                            ])
+//                            ->one();
+//                        if (empty($rs)) {
+//                            $rs                 = new \open20\amos\utility\models\BulletCounters();
+//                            $rs->widget_icon_id = $wid['id'];
+//                        }
+//                        $rs->user_id     = $this->receiver_id;
+//                        $rs->counter     = $rs->counter + 1;
+//                        $rs->pre_counter = $rs->counter;
+//                        $rs->save();
+//                    }
+//                }
                 $mailModule = Yii::$app->getModule('email');
                 if (!is_null($mailModule)) {
 
                     /** @var \open20\amos\emailmanager\AmosEmail $mailModule */
                     $mailModule->send(
-                        (!empty($module->defaultEmailSender)? $module->defaultEmailSender : (!empty($from) ? $from : $sender->email)),
-                        User::findOne($this->receiver_id)->email,
-                        $subject,
-                        $text
+                        (!empty($module->defaultEmailSender) ? $module->defaultEmailSender : (!empty($from) ? $from : $sender->email)),
+                        User::findOne($this->receiver_id)->email, $subject, $text
                     );
                 }
             }
@@ -109,5 +130,4 @@ class Message extends \open20\amos\chat\models\base\Message
         }
         parent::afterSave($insert, $changedAttributes);
     }
-
 }

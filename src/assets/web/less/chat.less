@@ -17,6 +17,7 @@ IMPORT STYLE-CUSTOM
     float: left;
     max-height: 684px;
     overflow: auto;
+
     a {
       text-decoration: none;
     }
@@ -67,10 +68,12 @@ IMPORT STYLE-CUSTOM
       }
 
     }
+
     .current {
       background-color: @light-background-primary-color;
       border-color: @light-background-primary-color;
       color: contrast(@light-background-primary-color);
+
       .conversation-preview-text {
         border-color: @white-color;
       }
@@ -131,6 +134,7 @@ IMPORT STYLE-CUSTOM
             width: 100%;
             max-width: 300px;
           }
+
           a {
             font-weight: bold;
             text-decoration: underline;
@@ -162,20 +166,24 @@ IMPORT STYLE-CUSTOM
 
   }
 
-  .media, .media-body {
+  .media,
+  .media-body {
     overflow: visible;
   }
 
   //LEFT-COLUMN single conversation
   .conversation {
-    @media(max-width: 767px){
+    @media(max-width: 767px) {
       border-top: 5px solid @border-color-default;
     }
-    &:hover {
-      .msg-new {
-        display: none;
-      }
 
+    .badge.msg-new {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
+
+    &:hover {
       .list-inline {
         opacity: 1;
       }
@@ -204,6 +212,7 @@ IMPORT STYLE-CUSTOM
     .media {
       padding-left: @padding-medium;
     }
+
     a.conversation {
       text-decoration: none;
       vertical-align: middle;
@@ -229,6 +238,7 @@ IMPORT STYLE-CUSTOM
   /* icon redactor */
   .re-icon {
     font-size: 1.5em;
+
     &:hover {
       color: #514b4b;
       opacity: 0.8;
@@ -299,6 +309,7 @@ IMPORT STYLE-CUSTOM
   .send-wrap {
     padding-top: 40px;
   }
+
   .flipped {
     transform: scaleX(-1);
     -moz-transform: scaleX(-1);

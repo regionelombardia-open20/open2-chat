@@ -79,7 +79,7 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
     /**
      * @var string $subjectOfimmediateNotification Default subject for emails of "immediate notification force". If in the module settings override the value, you detach translation system
      */
-    public $subjectOfimmediateNotification = 'default';
+    private $_subjectOfimmediateNotification = 'default';
 
     /**
      * @var boolean $enableForwardMessage used to enable the forwarding of messages. It's required to insert an array of user_id in the variable $userIdForwardMessage
@@ -129,9 +129,7 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
     {
         parent::init();
         $this->db = Yii::$app->db;
-        if ($this->subjectOfimmediateNotification == 'default') {
-            $this->subjectOfimmediateNotification = self::t('amoschat', 'New message from chat');
-        }
+
         \Yii::setAlias('@open20/amos/' . static::getModuleName() . '/controllers', __DIR__ . '/controllers/');
         // initialize the module with the configuration loaded from config.php
         Yii::configure($this, require(__DIR__ . DIRECTORY_SEPARATOR . self::$CONFIG_FOLDER . DIRECTORY_SEPARATOR . 'config.php'));
@@ -143,6 +141,20 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
     public static function getModuleName()
     {
         return "chat";
+    }
+
+    public function getSubjectOfimmediateNotification() {
+        if ($this->_subjectOfimmediateNotification == 'default') {
+            $this->_subjectOfimmediateNotification = self::t('amoschat', 'New message from chat');
+        }
+
+        return $this->_subjectOfimmediateNotification;
+    }
+
+    public function setSubjectOfimmediateNotification($s) {
+        $this->_subjectOfimmediateNotification = $s;
+
+        return true;
     }
 
     /**

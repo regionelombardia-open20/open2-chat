@@ -33,10 +33,10 @@ class User extends \open20\amos\core\user\User
     public static function getAll($asArray = false)
     {
         if($asArray){
-            return User::find()->with('userProfile')->asArray()->all();
+            return User::find()->with('userProfile')->andWhere(['<>', 'user.id', \Yii::$app->user->id])->asArray()->all();
         }
         else{
-            return User::find()->with('userProfile')->all();
+            return User::find()->with('userProfile')->andWhere(['<>', 'user.id', \Yii::$app->user->id])->all();
         }
     }
 

@@ -44,6 +44,7 @@ class Conversation extends Record
         if (null !== $key) {
             $query->andHaving([$history ? '<' : '>', 'last_message_id', $key]);
         }
+        
         return new DataProvider([
             'query' => $query,
             'key' => 'last_message_id',
@@ -117,6 +118,7 @@ class Conversation extends Record
             'sender_id' => $contactId,
             'is_new' => true
         ]);
+
         return compact('count');
     }
 

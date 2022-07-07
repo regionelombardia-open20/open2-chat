@@ -57,6 +57,9 @@ class Message extends Record
         if (null !== $key) {
             $query->andWhere([$history ? '<' : '>', 'id', $key]);
         }
+
+        \open20\amos\chat\models\Conversation::read($userId, $contactId);
+        
         return new DataProvider([
             'query' => $query,
 

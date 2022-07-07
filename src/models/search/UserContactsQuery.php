@@ -113,18 +113,30 @@ class UserContactsQuery extends User
      */
     private static function getQueryContacts($userId){
         $contactsInvited =
-            User::find()->innerJoin('user_contact', 'user.id = user_contact.contact_id')
-                ->innerJoin('user_profile', 'user_profile.user_id = user.id')
+            User::find()
+                ->innerJoin('user_profile', 'user_profile.user_id = user.id');
+
+        if(\Yii::$app->params['skipContacts'] !== true) {
+            $contactsInvited->innerJoin('user_contact', 'user.id = user_contact.contact_id')
                 ->andWhere('user_contact.deleted_at IS NULL AND user_profile.deleted_at IS NULL')
-                ->andWhere("user_contact.user_id = ".$userId)->andWhere([ 'user_contact.status' => UserContact::STATUS_ACCEPTED])
+                ->andWhere("user_contact.user_id = " . $userId)->andWhere(
+                    ['user_contact.status' => UserContact::STATUS_ACCEPTED]
+                )
                 ->andWhere(['attivo' => 1]);
+        }
 
         $contactsInviting =
-            User::find()->innerJoin('user_contact', 'user.id = user_contact.user_id')
-                ->innerJoin('user_profile', 'user_profile.user_id = user.id')
+            User::find()
+                ->innerJoin('user_profile', 'user_profile.user_id = user.id');
+
+        if(\Yii::$app->params['skipContacts'] !== true) {
+            $contactsInviting->innerJoin('user_contact', 'user.id = user_contact.user_id')
                 ->andWhere('user_contact.deleted_at IS NULL AND user_profile.deleted_at IS NULL')
-                ->andWhere("user_contact.contact_id = ".$userId)->andWhere(['user_contact.status' => UserContact::STATUS_ACCEPTED])
+                ->andWhere("user_contact.contact_id = " . $userId)->andWhere(
+                    ['user_contact.status' => UserContact::STATUS_ACCEPTED]
+                )
                 ->andWhere(['attivo' => 1]);
+        }
 
         return $contactsInvited->union($contactsInviting);
     }
