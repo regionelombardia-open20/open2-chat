@@ -30,6 +30,7 @@ $module = Yii::$app->getModule('chat');
             <div>
                 <?= isset($message)? \yii\helpers\HtmlPurifier::process($message->text,[
                         'HTML.Allowed' => isset($module)? $module->emailMessageContentAllowedTag: '',
+                        'HTML.SafeIframe'         => true,
                 ]): '' ?>
             </div>
             <h2 style="font-size:2em;line-height: 1;"><?= Html::a(

@@ -354,11 +354,11 @@ $this->registerJs($js);
             <?php Pjax::end() ?>
         </div>
 
-        <div class="send-wrap ">
+        <div class="col-sm-11 send-wrap ">
             <?= $message->renderForm() ?>
         </div>
 
-        <div class="btn-panel">
+        <div class="col-sm-1 btn-panel">
             <a id="msg-send" href="" class="send-message-btn pull-right" role="button" title="<?= AmosChat::t('amoschat', 'Invia messaggio') ?>">
                 <?= AmosIcons::show('mail-send', [
                     'class' => 'am-2'

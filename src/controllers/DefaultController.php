@@ -120,6 +120,19 @@ class DefaultController extends CrudController
                 ]
         ]);
     }
+    
+    
+    /**
+     * disabled csrf token for send-message
+     */
+    
+    public function beforeAction($action) {
+      if ($action->id == 'send-message') {
+        $this->enableCsrfValidation = false;
+     // Yii::$app->controller->enableCsrfValidation = FALSE;
+      }
+      return parent::beforeAction($action);
+    }
 
     /**
      */
