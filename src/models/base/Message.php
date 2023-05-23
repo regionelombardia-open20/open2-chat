@@ -59,7 +59,7 @@ class Message extends Record
         }
 
         \open20\amos\chat\models\Conversation::read($userId, $contactId);
-        
+
         return new DataProvider([
             'query' => $query,
 
@@ -95,7 +95,7 @@ class Message extends Record
      */
     public static function create($userId, $contactId, $text)
     {
-        $instance = new static(['scenario' => 'create']);
+        $instance = new self(['scenario' => 'create']);
         $instance->created_at = new Expression('UTC_TIMESTAMP()');
         $instance->sender_id = $userId;
         $instance->receiver_id = $contactId;
@@ -103,6 +103,8 @@ class Message extends Record
         $instance->is_deleted_by_sender = 0;
         $instance->is_deleted_by_receiver =  0;
         $instance->is_new = 1;
+        // Validate forces XSS purification
+        $instance->validate();
         if($instance->save()){
             Message::automaticMessage($contactId);
         }
@@ -133,6 +135,8 @@ class Message extends Record
                    $message->sender_id = $contactId;
                    $message->receiver_id = \Yii::$app->user->id;
                    $message->is_new = 1;
+                   // Validate forces XSS purification
+                   $instance->validate();
                    $message->save();
                }
            }

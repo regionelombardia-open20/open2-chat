@@ -38,7 +38,6 @@ use yii\web\Response;
 class DefaultController extends CrudController
 {
 
-
     use ControllerTrait {
         behaviors as behaviorsTrait;
     }
@@ -87,51 +86,68 @@ class DefaultController extends CrudController
      */
     public function behaviors()
     {
-        return ArrayHelper::merge($this->behaviorsTrait(), [
-            [
-                'class' => 'yii\filters\VerbFilter',
-                'actions' => [
-                    'index' => ['get', 'post'],
-                    'assistance' => ['get', 'post'],
-                    'login-as' => ['post'],
-                    'messages' => ['get', 'post'],
-                    'send-message' => ['get', 'post'],
-                    'conversations' => ['get', 'post'],
-                    'contacts' => ['get'],
-                    'create-message' => ['post'],
-                    'forward-message' => ['post', 'get'],
-                    'delete-conversation' => ['delete'],
-                    'mark-conversation-as-read' => ['patch', 'put'],
-                    'mark-conversation-as-unread' => ['patch', 'put'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
+        return ArrayHelper::merge(
+                $this->behaviorsTrait(),
+                [
                     [
-                        'allow' => true,
+                        'class' => 'yii\filters\VerbFilter',
                         'actions' => [
-                            'chat-with-assistance',
-                            'send-message-ajax'
+                            'index' => ['get', 'post'],
+                            'assistance' => ['get', 'post'],
+                            'login-as' => ['post'],
+                            'messages' => ['get', 'post'],
+                            'send-message' => ['get', 'post'],
+                            'conversations' => ['get', 'post'],
+                            'contacts' => ['get'],
+                            'create-message' => ['post'],
+                            'forward-message' => ['post', 'get'],
+                            'delete-conversation' => ['delete'],
+                            'mark-conversation-as-read' => ['patch', 'put'],
+                            'mark-conversation-as-unread' => ['patch', 'put'],
                         ],
-                        'roles' => ['BASIC_USER','ADMIN']
                     ],
+                    'access' => [
+                        'class' => AccessControl::class,
+                        'rules' => [
+                            [
+                                'allow' => true,
+                                'actions' => [
+                                    'chat-with-assistance',
+                                    'send-message-ajax'
+                                ],
+                                'roles' => ['BASIC_USER', 'ADMIN']
+                            ],
+                        ]
                     ]
                 ]
-        ]);
+        );
     }
-    
-    
+
     /**
      * disabled csrf token for send-message
+     *
+     * @param type $action˙
+     * @return type
      */
-    
-    public function beforeAction($action) {
-      if ($action->id == 'send-message') {
-        $this->enableCsrfValidation = false;
-     // Yii::$app->controller->enableCsrfValidation = FALSE;
-      }
-      return parent::beforeAction($action);
+    public function beforeAction($action)
+    {
+        $params = ArrayHelper::merge(
+            Yii::$app->request->get(),
+            Yii::$app->request->post()
+        );
+        
+        if (count($params) > 1) {
+            if (!isset($params['contactId'])) {
+                return $this->redirect(['/messages']);
+            }
+            return $this->redirect(['/messages/' . $params['contactId'],]);
+        }
+        
+        if ($action->id == 'send-message') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
     }
 
     /**
@@ -193,12 +209,11 @@ class DefaultController extends CrudController
                 $asset = $this->assetRegistration();
 
                 return $this->render(
-                    'index',
-                    compact('conversationDataProvider', 'messageDataProvider', 'userContactDataProvider', 'users', 'user', 'contact', 'current', 'asset', 'idsCommunity')
+                        'index',
+                        compact('conversationDataProvider', 'messageDataProvider', 'userContactDataProvider', 'users', 'user', 'contact', 'current', 'asset', 'idsCommunity')
                 );
             } else {
                 $current = current($conversationDataProvider->getModels());
-
             }
         }
 
@@ -209,10 +224,7 @@ class DefaultController extends CrudController
 
             $contact = User::findOne($contactId);
 
-
             $current['contact'] = $contact;
-
-
         }
 
         if (empty($contact)) {
@@ -224,14 +236,14 @@ class DefaultController extends CrudController
         $messageClass = $this->messageClass;
         $messageDataProvider = $messageClass::get($userId, $contact->id, 10);
         //$users = $this->getUsers([$userId, $contact->id]);
-
+        $users = [];
         // This set all "is_new" field of current conversation messages to false, that mean the conversation is read.
         $conversationClass::read($userId, $contact->id);
 
         $asset = $this->assetRegistration();
         return $this->render(
-            'index',
-            compact('conversationDataProvider', 'messageDataProvider', 'userContactDataProvider', 'users', 'user', 'contact', 'current', 'asset', 'idsCommunity')
+                'index',
+                compact('conversationDataProvider', 'messageDataProvider', 'userContactDataProvider', 'users', 'user', 'contact', 'current', 'asset', 'idsCommunity')
         );
     }
 
@@ -239,24 +251,23 @@ class DefaultController extends CrudController
      * @param $user_id
      * @param $url
      */
-    public function actionChatWithAssistance($user_id, $url, $idchatAssistance){
+    public function actionChatWithAssistance($user_id, $url, $idchatAssistance)
+    {
         $chat = \Yii::$app->getModule(AmosChat::getModuleName());
         $defaultMessage = AmosChat::t('amoschat', 'Ciao, se hai dubbi scrivici utilizzando quest chat');
         $text = $defaultMessage;
 
-        if(!empty($chat)){
-            $text = !empty($chat->assistenzaChatCommunity[$idchatAssistance]['welcome_message'])
-                ? $chat->assistenzaChatCommunity[$idchatAssistance]['welcome_message']
-                : $defaultMessage;
+        if (!empty($chat)) {
+            $text = !empty($chat->assistenzaChatCommunity[$idchatAssistance]['welcome_message']) ? $chat->assistenzaChatCommunity[$idchatAssistance]['welcome_message'] : $defaultMessage;
         }
 
         $today = new \DateTime();
         $countTodayMessages = Message::find()->andWhere(['OR',
-            ['AND', ['receiver_id' => \Yii::$app->user->id],['sender_id' => $user_id]],
-            ['AND', ['receiver_id' => $user_id],['sender_id' => \Yii::$app->user->id]]
-        ])
-        ->andWhere([new Expression('DATE_FORMAT(created_at,"%Y-%m-%d")') => $today])->count();
-        if($countTodayMessages == 0) {
+                    ['AND', ['receiver_id' => \Yii::$app->user->id], ['sender_id' => $user_id]],
+                    ['AND', ['receiver_id' => $user_id], ['sender_id' => \Yii::$app->user->id]]
+                ])
+                ->andWhere([new Expression('DATE_FORMAT(created_at,"%Y-%m-%d")') => $today])->count();
+        if ($countTodayMessages == 0) {
             $message = new Message();
             $message->text = $text;
             $message->sender_id = $user_id;
@@ -301,7 +312,7 @@ class DefaultController extends CrudController
      */
     public function getMessageClass()
     {
-        return Message::className();
+        return Message::class;
     }
 
     /**
@@ -309,7 +320,7 @@ class DefaultController extends CrudController
      */
     public function getConversationClass()
     {
-        return Conversation::className();
+        return Conversation::class;
     }
 
     /**
@@ -318,7 +329,7 @@ class DefaultController extends CrudController
     public function getUserContactClass()
     {
         $module = \Yii::$app->getModule('chat');
-        if($module){
+        if ($module) {
             return $module->model('UserContactsQuery');
         }
         return null;
@@ -378,13 +389,14 @@ class DefaultController extends CrudController
         }
     }
 
+    /**
+     * 
+     * @param type $idMessage
+     * @param type $idUserToForward
+     * @return type
+     */
     public function actionForwardMessage($idMessage, $idUserToForward)
     {
-//        $idMessage = Yii::$app->request->get('idMessage');
-//        $idUserToForward = Yii::$app->request->get('idUserToForward');
-//        var_dump(Yii::$app->request->get());
-//        $idMessage = 2;
-//        $idUserToForward = 372;
         $message = Message::findOne(['id' => $idMessage]);
         $message->receiver_id = $idUserToForward;
         $message->is_new = true;
@@ -401,14 +413,13 @@ class DefaultController extends CrudController
     public function actionAssistance()
     {
         $moduleChat = AmosChat::getInstance();
-        return $this->redirect(['index', 'contactId' => $moduleChat->assistanceUserId ]);
+       
     }
 
     /**
      * @param null $layout
      * @return bool
      */
-
     public function setUpLayout($layout = null)
     {
         if ($layout === false) {
@@ -430,18 +441,31 @@ class DefaultController extends CrudController
     /**
      * @return array
      */
-    public function actionSendMessageAjax(){
+    public function actionSendMessageAjax()
+    {
         \Yii::$app->response->format = Response::FORMAT_JSON;
         $sender_id = \Yii::$app->request->post('sender_id');
         $receiver_id = \Yii::$app->request->post('receiver_id');
         $text = \Yii::$app->request->post('text');
 
+        $userContactDataProvider = $this->userContactClass::getUserContacts($sender_id);
+        $hasContact = $userContactDataProvider
+            ->query
+            ->andWhere(['in', 'user.id', [$sender_id, $receiver_id]])
+            ->limit(1)
+            ->one();
+
+        if (empty($hasContact) || $sender_id == $receiver_id) {
+            throw new ForbiddenHttpException(AmosChat::t('amoschat', 'Non puoi inviare un messaggio in questa conversazione'));
+        }
         $message = new Message();
         $message->sender_id = $sender_id;
         $message->receiver_id = $receiver_id;
         $message->text = $text;
         $message->is_new = 1;
         $ok = $message->save(false);
+
         return ['success' => $ok];
     }
+
 }

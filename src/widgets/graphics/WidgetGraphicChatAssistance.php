@@ -112,6 +112,8 @@ class WidgetGraphicChatAssistance extends WidgetGraphic
                 'url' => $url,
                 'widget' => $this,
             ]);
+        } else {
+            return '';
         }
     }
 

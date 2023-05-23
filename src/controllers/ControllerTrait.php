@@ -23,7 +23,6 @@ use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\IdentityInterface;
 
-
 /**
  * Class ControllerTrait
  * @package open20\amos\chat\controllers
@@ -35,6 +34,7 @@ use yii\web\IdentityInterface;
  */
 trait ControllerTrait
 {
+
     /**
      * @return array
      */
@@ -42,9 +42,9 @@ trait ControllerTrait
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'ruleConfig' => [
-                    'class' => AccessRule::className(),
+                    'class' => AccessRule::class,
                 ],
                 'rules' => [
                     [
@@ -67,7 +67,6 @@ trait ControllerTrait
                     ],
                 ],
             ],
-
         ];
     }
 
@@ -113,7 +112,7 @@ trait ControllerTrait
      * @return DataProvider
      */
     public function actionMessages($contactId)
-    {
+    {        
         $userId = $this->user->getId();
         $request = Yii::$app->request;
         $limit = $request->get('limit', $request->post('limit'));
@@ -132,16 +131,17 @@ trait ControllerTrait
     public function actionCreateMessage($contactId)
     {
         $userId = $this->user->getId();
-        if ($userId == $contactId) {
+        $userContactDataProvider = $this->userContactClass::getUserContacts($userId);
+        $hasContact = $userContactDataProvider->query->andWhere(['in', 'user.id', [$userId, $contactId]])->limit(1)->one();
+        if (empty($hasContact) || $userId == $contactId) {
             throw new ForbiddenHttpException(AmosChat::t('amoschat', 'Non puoi inviare un messaggio in questa conversazione'));
         }
+
         $text = Yii::$app->request->post('text');
         /** @var $messageClass Message */
         $messageClass = $this->messageClass;
 
-
         return $messageClass::create($userId, $contactId, $text);
-
     }
 
     /**
@@ -152,15 +152,17 @@ trait ControllerTrait
     public function actionSendMessage($contactId)
     {
         $userId = $this->user->getId();
-        if ($userId == $contactId) {
+        $userContactDataProvider = $this->userContactClass::getUserContacts($userId);
+        $hasContact = $userContactDataProvider->query->andWhere(['in', 'user.id', [$userId, $contactId]])->limit(1)->one();
+        if (empty($hasContact) || $userId == $contactId) {
             throw new ForbiddenHttpException(AmosChat::t('amoschat', 'Non puoi inviare un messaggio in questa conversazione'));
         }
         $text = Yii::$app->request->post('text');
         /** @var $messageClass Message */
         $messageClass = $this->messageClass;
         $messageClass::create($userId, $contactId, $text);
-        if(\Yii::$app->request->isAjax){
-            return json_encode(['success' => 1, 'url'=> Url::to(['/messages'])]);
+        if (\Yii::$app->request->isAjax) {
+            return json_encode(['success' => 1, 'url' => Url::to(['/messages'])]);
         }
         return $this->redirect(['/messages']);
     }
@@ -224,7 +226,7 @@ trait ControllerTrait
      */
     public function getMessageClass()
     {
-        return Message::className();
+        return Message::class;
     }
 
     /**
@@ -232,8 +234,7 @@ trait ControllerTrait
      */
     public function getConversationClass()
     {
-        return Conversation::className();
+        return Conversation::class;
     }
-
 
 }

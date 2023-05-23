@@ -119,6 +119,12 @@ class AmosChat extends AmosModule implements BootstrapInterface, ModuleInterface
      * @var array 
      */
     public $automaticMessage = [];
+    
+    /**
+     * 
+     * @var bool
+     */
+    public $enableEmoticonInRte = false;
 
     /**
      * Initializes amos messaggi privati module.
